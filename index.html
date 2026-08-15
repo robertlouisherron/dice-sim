@@ -1,36 +1,179 @@
-Dice Simulator
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dice Simulator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 380px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .input-group {
+      width: 48%;
+    }
+    label {
+      font-size: 12px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
+    }
+    select {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+    button {
+      width: 100%;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    button:hover {
+      background-color: #004c99;
+    }
+    .dice-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      min-height: 50px;
+      margin: 15px 0;
+    }
+    .die {
+      width: 45px;
+      height: 45px;
+      border: 2px solid #0066cc;
+      background-color: #e6f0ff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0066cc;
+    }
+    .stats-box {
+      display: flex;
+      justify-content: space-around;
+      background-color: #eee;
+      border-radius: 4px;
+      padding: 10px 0;
+      margin-top: 10px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #555;
+      font-weight: bold;
+    }
+    .stat-val {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
 
+<div class="card">
+  <h3 style="margin-top: 0;">Dice Statistics Simulator</h3>
 
-  
-    Dice Statistics Simulator
-    
-      
-        Number of Dice:
-        
-          1
-          2
-          3
-          4
-          5
-        
-      
-      
-        Sides per Die:
-        
-          d6 (6 sides)
-          d8 (8 sides)
-          d10 (10 sides)
-          d12 (12 sides)
-          d20 (20 sides)
-        
-      
-      Roll Dice
-    
+  <div class="input-row">
+    <div class="input-group">
+      <label for="numDice">Number of Dice:</label>
+      <select id="numDice">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="numSides">Sides per Die:</label>
+      <select id="numSides">
+        <option value="6" selected>d6 (6 sides)</option>
+        <option value="8">d8 (8 sides)</option>
+        <option value="10">d10 (10 sides)</option>
+        <option value="12">d12 (12 sides)</option>
+        <option value="20">d20 (20 sides)</option>
+      </select>
+    </div>
+  </div>
 
-    
+  <button type="button" id="rollBtn">Roll Dice</button>
 
-    
-      Sum-
-      Mean-
-      Expected E[X]-
+  <div class="dice-container" id="diceDisplay"></div>
+
+  <div class="stats-box">
+    <div>
+      <div class="stat-label">SUM</div>
+      <div class="stat-val" id="sumVal">-</div>
+    </div>
+    <div>
+      <div class="stat-label">MEAN</div>
+      <div class="stat-val" id="meanVal">-</div>
+    </div>
+    <div>
+      <div class="stat-label">EXPECTED</div>
+      <div class="stat-val" id="expVal">-</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function performRoll() {
+    var count = parseInt(document.getElementById("numDice").value, 10);
+    var sides = parseInt(document.getElementById("numSides").value, 10);
+    var display = document.getElementById("diceDisplay");
+
+    display.innerHTML = "";
+    var total = 0;
+
+    for (var i = 0; i < count; i++) {
+      var roll = Math.floor(Math.random() * sides) + 1;
+      total += roll;
+
+      var dieDiv = document.createElement("div");
+      dieDiv.className = "die";
+      dieDiv.textContent = roll;
+      display.appendChild(dieDiv);
+    }
+
+    document.getElementById("sumVal").textContent = total;
+    document.getElementById("meanVal").textContent = (total / count).toFixed(2);
+    document.getElementById("expVal").textContent = (count * (sides + 1) / 2).toFixed(1);
+  }
+
+  document.getElementById("rollBtn").onclick = performRoll;
+  performRoll();
+</script>
+
+</body>
+</html>
