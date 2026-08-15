@@ -2,100 +2,175 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dice Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College of Health Professions Dice Simulator</title>
   <style>
+    :root {
+      --um-purple: #4a154b;
+      --um-purple-dark: #370d38;
+      --um-gold: #c59b27;
+      --um-gold-light: #fdf8eb;
+      --um-gold-border: #e6c875;
+      --bg-slate: #f7f6f9;
+      --card-bg: #ffffff;
+      --text-main: #2b1f2d;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-slate);
+      color: var(--text-main);
       margin: 0;
-      padding: 20px;
+      padding: 16px;
       display: flex;
       justify-content: center;
     }
+
     .card {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      width: 380px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      background: var(--card-bg);
+      border: 2px solid var(--um-purple);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 6px 16px rgba(74, 21, 75, 0.12);
       text-align: center;
+      box-sizing: border-box;
     }
+
+    .badge {
+      display: inline-block;
+      background: var(--um-gold-light);
+      color: var(--um-purple);
+      border: 1px solid var(--um-gold-border);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      margin: 4px 0 16px 0;
+      color: var(--um-purple);
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
     .input-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 14px;
       text-align: left;
     }
+
     .input-group {
-      width: 48%;
+      flex: 1;
     }
+
     label {
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 700;
+      color: var(--um-purple);
       display: block;
       margin-bottom: 4px;
     }
+
     select {
       width: 100%;
-      padding: 8px;
+      padding: 8px 10px;
       font-size: 14px;
-      border-radius: 4px;
-      border: 1px solid #aaa;
-      background: #fff;
+      border-radius: 6px;
+      border: 1.5px solid var(--um-purple);
+      background: #ffffff;
+      color: var(--text-main);
+      box-sizing: border-box;
+      outline: none;
     }
+
+    select:focus {
+      border-color: var(--um-gold);
+      box-shadow: 0 0 0 2px rgba(197, 155, 39, 0.25);
+    }
+
     button {
       width: 100%;
-      background-color: #0066cc;
-      color: white;
-      border: none;
-      padding: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 4px;
+      background: var(--um-purple);
+      color: #ffffff;
+      border: 2px solid var(--um-gold);
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: 8px;
       cursor: pointer;
-      margin: 10px 0;
+      margin: 10px 0 16px 0;
+      transition: background 0.15s ease, transform 0.05s ease;
     }
+
     button:hover {
-      background-color: #004c99;
+      background: var(--um-purple-dark);
     }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
     .dice-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      min-height: 50px;
-      margin: 15px 0;
+      gap: 10px;
+      min-height: 54px;
+      margin: 14px 0 18px 0;
     }
+
     .die {
-      width: 45px;
-      height: 45px;
-      border: 2px solid #0066cc;
-      background-color: #e6f0ff;
-      border-radius: 6px;
+      width: 50px;
+      height: 50px;
+      border: 2px solid var(--um-purple);
+      background: var(--um-gold-light);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #0066cc;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--um-purple);
+      box-shadow: 0 2px 4px rgba(74, 21, 75, 0.08);
+      animation: pop 0.15s ease-out;
     }
+
+    @keyframes pop {
+      0% { transform: scale(0.85); }
+      100% { transform: scale(1); }
+    }
+
     .stats-box {
       display: flex;
       justify-content: space-around;
-      background-color: #eee;
-      border-radius: 4px;
-      padding: 10px 0;
-      margin-top: 10px;
+      background: var(--um-gold-light);
+      border: 1px solid var(--um-gold-border);
+      border-radius: 8px;
+      padding: 12px 6px;
     }
+
     .stat-label {
-      font-size: 11px;
-      color: #555;
-      font-weight: bold;
+      font-size: 10px;
+      color: var(--um-purple);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
+
     .stat-val {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--um-purple);
       margin-top: 2px;
     }
   </style>
@@ -103,7 +178,8 @@
 <body>
 
 <div class="card">
-  <h3 style="margin-top: 0;">Dice Statistics Simulator</h3>
+  <div class="badge">University of Montevallo</div>
+  <h2>College of Health Professions<br>Dice Simulator</h2>
 
   <div class="input-row">
     <div class="input-group">
@@ -134,15 +210,15 @@
 
   <div class="stats-box">
     <div>
-      <div class="stat-label">SUM</div>
+      <div class="stat-label">Sum</div>
       <div class="stat-val" id="sumVal">-</div>
     </div>
     <div>
-      <div class="stat-label">MEAN</div>
+      <div class="stat-label">Sample Mean</div>
       <div class="stat-val" id="meanVal">-</div>
     </div>
     <div>
-      <div class="stat-label">EXPECTED</div>
+      <div class="stat-label">Expected E[X]</div>
       <div class="stat-val" id="expVal">-</div>
     </div>
   </div>
